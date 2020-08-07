@@ -4,7 +4,8 @@
   "description": "Backend and MongoDb interface for the Momentum app",
   "main": "index.js",
   "scripts": {
-    "test": "test"
+    "test": "test",
+    "start": "nodemon --exec babel-node src/index.js"
   },
   "repository": {
     "type": "git",
@@ -20,5 +21,12 @@
     "express": "^4.17.1",
     "mongodb": "^3.6.0",
     "mongoose": "^5.9.27"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.10.5",
+    "@babel/core": "^7.11.1",
+    "@babel/node": "^7.10.5",
+    "@babel/preset-env": "^7.11.0",
+    "nodemon": "^2.0.4"
   }
 }
