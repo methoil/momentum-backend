@@ -1,7 +1,16 @@
 import express from 'express';
-import Habits from './habits.model';
+import {MongoClient} from 'mongodb';
 
 const app = express();
+
+const dbUrl = 'mongodb://localhost:27017/mydb'; // TODO: make env var?
+try {
+    await MongoClient.connect(url);
+} catch (err) {
+    console.error('Error connection to DB', err);
+}
+
+
 
 app.get('/habits', (req, res) => {
     try {
