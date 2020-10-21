@@ -3,44 +3,47 @@ import {MongoClient} from 'mongodb';
 
 const app = express();
 
-const dbUrl = 'mongodb://localhost:27017/mydb'; // TODO: make env var?
+let db;
+let col;
+const dbUrl = 'mongodb://localhost:27017'; // TODO: make env var?
 try {
-    await MongoClient.connect(url);
+    const client = await MongoClient.connect(dbUrl);
+    db = client.db('momentum');
+    col = db.collection('habitHistory');
 } catch (err) {
     console.error('Error connection to DB', err);
 }
 
 
-
+// no real use case for this, probably will remove
 app.get('/habits', (req, res) => {
     try {
-        res.send(await Habits.find({}));
+        res.send(await col.find({}));
     } catch (err) {
         res.status(500).send(err);
     }
 });
 
-app.get('/habits:key', (req, res) => {
-    const key = req.params.key;
+app.get('/habits:user', (req, res) => {
+    const user = req.params.user;
 
     try {
-        const habit = await Habit.findById(key);
-        if (!habit) {
+        const habits = await col.find({user});
+        if (!habits) {
             return res.status(404).send();
         }
-        res.send(habit);
+        res.send(habits);
     } catch(err) {
         res.status(500).send(err);
     }
 });
 
 app.post('/habits', async (req, res) => {
-    const habit = new Habits(req.body);
+    const habit = req.body;
     try {
-        await habit.save();
+        await col.insertOne(habit);
         res.status(201).send(habit);
     } catch (err) {
         res.status(400).send(err);
-    }
-  
+    }  
 });
