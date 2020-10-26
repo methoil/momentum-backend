@@ -5,11 +5,13 @@ const jwt = require('jsonwebtoken');
 const userSchema = new mongoose.Schema({
     username: {
         type: String,
+        required: true,
         unique: true,
         trim: true,
     },
     email: {
         type: String,
+        required: true,
         unique: true,
         trim: true,
         lowercase: true,
@@ -25,7 +27,7 @@ const userSchema = new mongoose.Schema({
 });
 
 userSchema.methods.generateAuthToken = async function () {
-    const token = jwt.sign({id: this._is.toString()}, process.env.JWT_SECRET);
+    const token = jwt.sign({id: this._id.toString()}, process.env.JWT_SECRET);
     this.tokens = user.tokens.concat({token});
     return token;
 }

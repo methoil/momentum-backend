@@ -3,7 +3,7 @@ const User = require('../mongo/user.model');
 
 const router = new express.Router();
 
-router.post('/users', (req, res) => {
+router.post('/users', async (req, res) => {
     const user = new User(req.body);
 
     try {
@@ -26,3 +26,5 @@ router.post('/users/login', async (req, res) => {
         res.status(400).send(err); // send this error back ??
     }
 });
+
+module.exports = router;
