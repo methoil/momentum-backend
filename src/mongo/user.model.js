@@ -24,11 +24,18 @@ const userSchema = new mongoose.Schema({
         trim: true,
         // validate
     },
+    tokens: [{
+        token: {
+            type: String,
+            required: true,
+        },
+    }]
 });
 
 userSchema.methods.generateAuthToken = async function () {
     const token = jwt.sign({id: this._id.toString()}, process.env.JWT_SECRET);
-    this.tokens = user.tokens.concat({token});
+    this.tokens = this.tokens.concat({token});
+    await this.save();
     return token;
 }
 
