@@ -1,5 +1,6 @@
 const express = require('express');
 const User = require('../mongo/user.model');
+const auth = require('../middleware/auth');
 
 const router = new express.Router();
 
@@ -15,6 +16,11 @@ router.post('/users', async (req, res) => {
         res.status(400).send(err);
     }
 });
+
+router.get('/users/me', auth, async (req, res) => {
+    console.log('next worked');
+    res.send(req.user);
+})
 
 router.post('/users/login', async (req, res) => {
     try {
