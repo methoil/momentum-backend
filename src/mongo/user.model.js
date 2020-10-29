@@ -29,7 +29,13 @@ const userSchema = new mongoose.Schema({
             type: String,
             required: true,
         },
-    }]
+    }],
+});
+
+userSchema.virtual('habits', {
+    ref: 'Habit',
+    localField: '_id',
+    foreignField: 'owner',
 });
 
 // automatically gets called when returning the user object as it's converted to JSON

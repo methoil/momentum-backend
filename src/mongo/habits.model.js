@@ -21,7 +21,12 @@ const habitSchema = mongoose.Schema('Habit', {
     history: {
         type: Array,
         default: [],
-    }    
+    },
+    owner: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: 'User',
+    },
 });
 
 const Habit = mongoose.model('Habit', habitSchema);
