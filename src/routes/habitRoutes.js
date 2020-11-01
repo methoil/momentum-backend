@@ -1,5 +1,5 @@
 const express = require("express");
-const Habit = require("../models/habits.model");
+const Habit = require("../mongo/habits.model");
 const auth = require("../middleware/auth");
 const router = new express.Router();
 
@@ -29,8 +29,9 @@ router.get("/habits", auth, async (req, res) => {
 router.get("/habits/:id", auth, async (req, res) => {
   try {
     const habit = await Habit.findOne({
+        // TODO: use name here - how to make it unique per user in mongo?
       _id: req.params.id,
-      ouwner: req.user._id,
+      owner: req.user._id,
     });
     if (!habit) return res.status(404).send();
 

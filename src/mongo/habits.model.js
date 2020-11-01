@@ -1,10 +1,6 @@
 const mongoose = require('mongoose');
 
-const habitSchema = mongoose.Schema('Habit', {    
-    username: {
-        type: String,
-        required: true,
-    },
+const habitSchema = mongoose.Schema({    
     name: {
         type: String,
         required: true,
@@ -18,10 +14,9 @@ const habitSchema = mongoose.Schema('Habit', {
         required: false,
     },
     // TODO: define TS or Mongo type for this ??
-    history: {
-        type: Array,
-        default: [],
-    },
+    history: [{
+        type: Date,
+    }],
     owner: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
