@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const habitSchema = mongoose.Schema({    
+const habitSchema = mongoose.Schema({
     name: {
         type: String,
         required: true,
@@ -13,10 +13,10 @@ const habitSchema = mongoose.Schema({
         type: String,
         required: false,
     },
-    // TODO: define TS or Mongo type for this ??
-    history: [{
-        type: Date,
-    }],
+    // TODO: make this a sub document?  - https://mongoosejs.com/docs/subdocs.html
+    history: {
+        type: Array,
+    },
     owner: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,

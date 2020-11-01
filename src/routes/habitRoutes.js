@@ -41,8 +41,8 @@ router.get("/habits/:id", auth, async (req, res) => {
   }
 });
 
-router.patch("habits/:id", auth, async (req, res) => {
-  const updates = Objext.keys(req.body);
+router.patch("/habits/:id", auth, async (req, res) => {
+  const updates = Object.keys(req.body);
   const allowed = ["history"];
   const isValid = updates.every((update) => allowed.includes(update));
 
@@ -51,7 +51,7 @@ router.patch("habits/:id", auth, async (req, res) => {
   try {
     const habit = await Habit.findOne({
       _id: req.params.id,
-      ouwner: req.user._id,
+      owner: req.user._id,
     });
     if (!habit) return res.status(404).send();
 
