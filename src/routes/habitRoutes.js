@@ -19,7 +19,11 @@ router.post("/habits", auth, async (req, res) => {
 
 router.get("/habits", auth, async (req, res) => {
   try {
-    await req.user.populate({ path: "habits" }).execPopulate();
+    const match = {};
+    if (req.query.searchName) {
+      match.name = { $regex: new RegExp(req.query.searchName, "i") };
+    }
+    await req.user.populate({ path: "habits", match }).execPopulate();
     res.send(req.user.habits);
   } catch (error) {
     res.status(500).send();
@@ -29,7 +33,7 @@ router.get("/habits", auth, async (req, res) => {
 router.get("/habits/:id", auth, async (req, res) => {
   try {
     const habit = await Habit.findOne({
-        // TODO: use name here - how to make it unique per user in mongo?
+      // TODO: use name here - how to make it unique per user in mongo?
       _id: req.params.id,
       owner: req.user._id,
     });
