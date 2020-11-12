@@ -15,9 +15,9 @@ const habitSchema = mongoose.Schema(
       required: false,
     },
     // TODO: make this a sub document?  - https://mongoosejs.com/docs/subdocs.html
-    history: {
-      type: Array,
-    },
+    history: [{
+      type: String,
+    }],
     owner: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,

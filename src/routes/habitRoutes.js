@@ -23,7 +23,16 @@ router.get("/habits", auth, async (req, res) => {
     if (req.query.searchName) {
       match.name = { $regex: new RegExp(req.query.searchName, "i") };
     }
-    await req.user.populate({ path: "habits", match }).execPopulate();
+    await req.user
+      .populate({
+        path: "habits",
+        match,
+        options: {
+          limit: parseInt(req.query.limit) || 10,
+          skip: parseInt(req.query.skip) || 0,
+        },
+      })
+      .execPopulate();
     res.send(req.user.habits);
   } catch (error) {
     res.status(500).send();
@@ -46,6 +55,7 @@ router.get("/habits/:id", auth, async (req, res) => {
 });
 
 router.patch("/habits/:id", auth, async (req, res) => {
+  console.log(req.body);
   const updates = Object.keys(req.body);
   const allowed = ["history"];
   const isValid = updates.every((update) => allowed.includes(update));
