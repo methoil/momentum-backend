@@ -1,0 +1,23 @@
+version: "3.8"
+
+services:
+
+  node: 
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    networks:
+      - momentum-network
+
+  mongodb:
+    image: mongo
+    ports:
+    - "27888:27017"
+    networks:
+      - momentum-network
+
+networks:
+  momentum-network:
+    driver: bridge
