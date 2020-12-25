@@ -8,16 +8,12 @@ services:
       dockerfile: Dockerfile
     ports:
       - "3000:3000"
-    networks:
-      - momentum-network
+    volumes:
+      - ./src
 
   mongodb:
     image: mongo
+    container_name: mongo
     ports:
-    - "27888:27017"
-    networks:
-      - momentum-network
+    - "27017:27017"
 
-networks:
-  momentum-network:
-    driver: bridge
