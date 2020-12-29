@@ -81,13 +81,15 @@ router.delete("/habits/:id", auth, async (req, res) => {
   try {
     const habit = await Habit.findOneAndDelete({
       _id: req.params.id,
-      owner: req.user._id,
+      // owner: req.user._id,
     });
+    // console.log({_id});
+    console.log(req.params);
     if (!habit) res.status(404).send();
 
     res.send(habit);
   } catch (error) {
-    res.status(50).send();
+    res.status(500).send();
   }
 });
 

@@ -11,8 +11,7 @@ app.use(userRouter);
 app.use(habitRouter);
 
 app.all("/*", (req, res, next) => {
-  console.log(req.hostname);
-  res.header("Access-Control-Allow-Origin", req.hostname);
+  res.header("Access-Control-Allow-Origin", "*");
   next();
 });
 
